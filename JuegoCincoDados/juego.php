@@ -3,8 +3,9 @@
 	<style type="text/css">	
 	   td {font-size: 100px;}
 	   h1 {text-align: center;}
-	   
-	   .jugador1 td{border: 5 solid red;}
+	   table {border-collapse: collapse;}
+	   .jugador1 td{border: 5 solid red;
+	                border-collapse: collapse;}
 	   .jugador2 td{border: 5 solid blue;}
 	   	   
 	</style>
@@ -35,6 +36,9 @@
     
     calcularGanador($jugador1, $jugador2);
         
+    
+    /* Calculamos el ganador dependiendo del
+       del resultado de los dos jugadores*/
     function calcularGanador($player1, $player2){
         if ($player1==$player2){
             echo "<p><b>Resultado:</b> Ha empatado </p>";
@@ -49,6 +53,8 @@
         }
     }
     
+    /*  Generamos 5 dados aleatorios y retonarmos 
+        el resultado del jugador*/
     function generarDados(){
         
         $num = random_int(1, 6);
@@ -70,6 +76,7 @@
         return $resu;            
     }
     
+    /* Dibujamos el dado segun el numero que nos pasen*/
     function dibujarDado($num){
         $dadoUno = "&#x2680";
         $dadoDos = "&#x2681";
