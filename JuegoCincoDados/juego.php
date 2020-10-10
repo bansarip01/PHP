@@ -4,8 +4,7 @@
 	   td {font-size: 100px;}
 	   h1 {text-align: center;}
 	   table {border-collapse: collapse;}
-	   .jugador1 td{border: 5 solid red;
-	                border-collapse: collapse;}
+	   .jugador1 td{border: 5 solid red;}
 	   .jugador2 td{border: 5 solid blue;}
 	   	   
 	</style>
