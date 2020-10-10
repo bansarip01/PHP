@@ -2,7 +2,7 @@
 <head>
 </head>
 <body>
-<?php
+<?php 
 
     $numuno = random_int(1,10);
     $numdos = random_int(1,10);
