@@ -20,6 +20,13 @@
     los dados menos el valor más bajo y el valor más alto.
     Se indicará qué jugador ha ganado.
     Al actualizar la página, se mostrará una nueva jugada.*/
+
+    define('DADOUNO',"&#x2680");
+    define('DADODOS',"&#x2681");
+    define('DADOTRES',"&#x2682");
+    define('DADOCUATRO',"&#x2683");
+    define('DADOCINCO',"&#x2684");
+    define('DADOSEIS',"&#x2685");
        
     echo "<table class=\"jugador1\"><tr>";
     echo "<th>Jugador 1</th>";
@@ -77,25 +84,19 @@
     
     /* Dibujamos el dado segun el numero que nos pasen*/
     function dibujarDado($num){
-        $dadoUno = "&#x2680";
-        $dadoDos = "&#x2681";
-        $dadoTres = "&#x2682";
-        $dadoCuatro = "&#x2683";
-        $dadoCinco = "&#x2684";
-        $dadoSeis = "&#x2685";
-        
+             
         switch ($num){
-            case 1: echo "<td>".$dadoUno."</td>";
+            case 1: echo "<td>".DADOUNO."</td>";
             break;
-            case 2: echo "<td>".$dadoDos."</td>";
+            case 2: echo "<td>".DADODOS."</td>";
             break;
-            case 3: echo "<td>".$dadoTres."</td>";
+            case 3: echo "<td>".DADOTRES."</td>";
             break;
-            case 4: echo "<td>".$dadoCuatro."</td>";
+            case 4: echo "<td>".DADOCUATRO."</td>";
             break;
-            case 5: echo "<td>".$dadoCinco."</td>";
+            case 5: echo "<td>".DADOCINCO."</td>";
             break;
-            case 6: echo "<td>".$dadoSeis."</td>";
+            case 6: echo "<td>".DADOSEIS."</td>";
             break;
         }
     }
