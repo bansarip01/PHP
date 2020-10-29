@@ -1,6 +1,9 @@
 <?php 
+    //directorio de almacenamiento
+    define('DIRECTORIO', "D:\DAW\imgusers\\");
+
     // se incluyen esta tabla de  códigos de error que produce la subida de archivos en PHPP
-    // Posibles errores de subida segun el manual de PHP
+    // Posibles errores de subida segun el manual de PHP    
     $codigosErrorSubida= [
         0 => 'Subida correcta',
         1 => 'ERROR: El tamaño del archivo excede el admitido por el servidor',  // directiva upload_max_filesize en php.ini
@@ -13,6 +16,7 @@
     ]; 
     
     function procesarFicheros($archivos) {
+        $msj = "<div class='procesando'><h4>Procesando subida de archivos :</h4></div>";
                       
         $contFicheros = count($archivos['name']);// Obtenemos el total de ficheros subidos
         $clavesFicheros = array_keys($archivos); // Obtenemos un array de las claves.
@@ -25,67 +29,79 @@
             foreach ($clavesFicheros as $key){               
                 $auxFicheros[$i][$key]=$archivos[$key][$i];
             }                    
-        }
-        
-        escribirDatos($auxFicheros);
+        }        
         
         // Comprobamos que el tamaño total no supere los 3KB
         if ($tamanoTotal > 300000) {
-            
-            echo "<div class='error'>ERROR: La suma del tamaño de todos archivos es mayor a 3KB </div>";
+            foreach ($auxFicheros as $file){
+                $msj .= escribirDatos($file);
+            }
+            $msj .= "<div class='error'>ERROR: La suma del tamaño de todos archivos es mayor a 3KB </div>";
         }
         else{
-            subirImagenes($auxFicheros);
+            $msj .= comprobarSubida($auxFicheros);
         }
-           
+        
+        return $msj;           
     }
     
-    function subirImagenes($ficheros){
-        
+    function comprobarSubida($ficheros){
+        $resu = "";        
         global $codigosErrorSubida;
         
-        $directorio = "D:\DAW\imgusers\\";
         
         foreach ($ficheros as $img){
             // Comprobamos que el fichero se subio sin errores
             if ($img['error']>0){
-                echo "<div class='error'>".$codigosErrorSubida[$img['error']]."</div>";
+                $resu .= "<div class='error'>".$codigosErrorSubida[$img['error']]."</div>";
             }
             else{
-                // Comprobamos que el archivo sea menor a 2KB
-                if ($img['size']<= 200000){
-                    // Nos aseguramos que solo puedan ser extension JPG o PNG
-                    if ($img['type'] === 'image/png' || $img['type'] === 'image/jpeg'){
-                        // Comprobamos si el fichero existe
-                        if (!(file_exists($directorio.$img['name']))){
-                            //Intentamos guardar el fichero en el directorio definido
-                            if(move_uploaded_file($img['tmp_name'], $directorio.$img['name']) == true){
-                                echo "<div class='exito'>El archivo ".$img['name']." ha sido guardado correctamente</div>";
-                            }
-                            else{
-                                echo "<div class='error'>ERROR: El archivo ".$img['name']." no guardado correctamente </div>";
-                            }
-                        }
-                        else{
-                             echo "<div class='error'>ERROR: El nombre del fichero ".$img['name']." ya existe en el servidor </div>";
-                        }
+                $resu .= subirImagenes($img);
+            }
+        }
+        
+        return $resu;
+    }
+    
+    // Comprobar que la imagen se pueda subir
+    function subirImagenes ($img){
+        $resu = "";
+        // Escribimos los datos
+        $resu .= escribirDatos($img);
+        
+        // Comprobamos que el archivo sea menor a 2KB
+        if ($img['size']<= 200000){
+            // Nos aseguramos que solo puedan ser extension JPG o PNG
+            if ($img['type'] === 'image/png' || $img['type'] === 'image/jpeg'){
+                // Comprobamos si el fichero existe
+                if (!(file_exists(DIRECTORIO.$img['name']))){
+                    //Intentamos guardar el fichero en el directorio definido
+                    if(move_uploaded_file($img['tmp_name'], DIRECTORIO.$img['name']) == true){
+                        $resu .= "<div class='exito'>El archivo ".$img['name']." ha sido guardado correctamente</div>";
                     }
                     else{
-                        echo "<div class='error'>ERROR: La extension del fichero ".$img['name']." no es PNG o JPG </div>";
+                        $resu .= "<div class='error'>ERROR: El archivo ".$img['name']." no guardado correctamente </div>";
                     }
                 }
                 else{
-                    echo "<div class='error'>ERROR: El tamaño del fichero ".$img['name']." es mayor que 2KB </div>";
+                    $resu .= "<div class='error'>ERROR: El nombre del fichero ".$img['name']." ya existe en el servidor </div>";
                 }
             }
-        }      
+            else{
+                $resu .= "<div class='error'>ERROR: La extension del fichero ".$img['name']." no es PNG o JPG </div>";
+            }
+        }
+        else{
+            $resu .= "<div class='error'>ERROR: El tamaño del fichero ".$img['name']." es mayor que 2KB </div>";
+        }
+        
+        return $resu;
     }
     
     // Escribimos algunos datos del fichero al usuario.
-    function escribirDatos($archivos){
-        foreach ($archivos as $fichero){
-            echo "<div class='archivo'> Nombre del fichero: ".$fichero['name']."</div>";  
-        }
+    function escribirDatos($fichero){
+        
+        return  "<div class='archivo'> Nombre del fichero: ".$fichero['name']."</div>";  
     }
 ?>
 <html>
@@ -103,6 +119,10 @@
         background-color: #b3ffff;
         border-width: 3px 0px 1px 0px; 
         border-style: solid; 
+    }
+    
+    .procesando{ border-width: 3px 0px 0px 0px;
+                 border-style: solid;
     }
     
     .archivo { background-color: #ccccb3;
@@ -137,12 +157,12 @@
 </form>
 </div>
 <?php
-    // Si recibimos algun fichero los procesamos
+    // Si recibimos algun fichero, los procesamos
     if(isset($_FILES['ficheros'])) {
-        
-            //Intentamos subir los ficheros.
-            procesarFicheros($_FILES['ficheros']);
+        //Intentamos subir los ficheros.
+        echo "".procesarFicheros($_FILES['ficheros']);
     }
+    
 ?>
 </div>
 </body>
