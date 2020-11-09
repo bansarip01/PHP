@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <html>
 <head>
 <meta charset="UTF-8">
@@ -57,4 +58,6 @@ else {
 </div>
 </body>
 </html>
+=======
+>>>>>>> 8b7442177495dd182aefb3e130aa8f57aaf5d1cc
 
