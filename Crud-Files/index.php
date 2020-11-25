@@ -24,3 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] == "GET" ){
     include_once "app/principal.php";
     }   
 }
+
+if ($_SERVER['REQUEST_METHOD'] == "POST" ){
+    switch ($_GET['orden']) {
+        case "Nuevo"    : accionAlta(); break;
+        case "Modificar": accionModificar($_GET['id']); break;
+    }
+}

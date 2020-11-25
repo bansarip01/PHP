@@ -12,15 +12,3 @@
 <h1>GESTIÓN DE USUARIOS versión 1.0</h1>
 </div>
 <div id="content">
-
-<?= mostrarDatos() ?>
-<form>
-<input type="submit" name="orden" value="Nuevo">
-</form>
-<form onsubmit=confirmarGuardar()>
-<input id="guardar" name="guardar" type="hidden">
-<input type="submit" name="orden" value="Terminar">
-</form>
-</div>
-</div>
-</body>
