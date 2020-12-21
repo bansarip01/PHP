@@ -1,11 +1,11 @@
-<?php
+<?php  
 session_start();
 include_once 'app/config.php';
 include_once 'app/controlerFile.php';
 include_once 'app/controlerUser.php';
 include_once 'app/modeloUser.php';
 
-// Inicializo el modelo
+// Inicializamos el modelo
 modeloUserInit();
 
 // Enrutamiento
