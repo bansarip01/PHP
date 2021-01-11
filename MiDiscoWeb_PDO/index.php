@@ -1,4 +1,4 @@
-<?php  
+<?php
 session_start();
 include_once 'app/config.php';
 include_once 'app/controlerFile.php';
@@ -35,7 +35,7 @@ if (!isset($_SESSION['user'])){
 } else {
     if ( $_SESSION['modo'] == GESTIONUSUARIOS){
         if (isset($_GET['orden'])){
-            // La orden tiene una funcion asociada 
+            // La orden tiene una funcion asociada
             if ( isset ($rutasUser[$_GET['orden']]) ){
                 $procRuta =  $rutasUser[$_GET['orden']];
             }
@@ -69,14 +69,11 @@ if (!isset($_SESSION['user'])){
             }
         }
         else{
-            $procRuta= "ctlUserVerFicheros"; 
+            $procRuta= "ctlUserVerFicheros";
         }
     }
 }
 
 // Llamo a la función seleccionada
 $procRuta();
-
-
-
-
+?>
